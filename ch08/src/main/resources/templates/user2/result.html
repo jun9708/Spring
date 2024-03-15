@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extra-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>user::success</title>
+</head>
+<body>
+    <h3>User2 쿠키</h3>
+    <a th:href="@{/}">메인</a>
+
+    <p>
+        jssionid : <span>[[${jsessionid}]]</span><br>
+        username : <span>[[${username}]]</span><br>
+    </p>
+
+</body>
+</html>
