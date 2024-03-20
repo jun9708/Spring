@@ -1,0 +1,77 @@
+logging:
+    file:
+        name: logs/sboard.log
+    level:
+        jdbc:
+            connection: info
+            resultsettable: info
+            sqlonly: info
+            sqltiming: info
+        root: info
+
+mybatis:
+    mapper-locations: classpath:mappers/**/*.xml
+
+server:
+    port: 8080
+    servlet:
+        context-path: /sboard
+
+spring:
+    application:
+        name: sboard
+
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: abc1234
+        url: jdbc:mysql://127.0.0.1:3306/jboard
+        username: wnsgud1997
+    devtools:
+        livereload:
+            enabled: true
+
+    # 이메일 설정
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: wnsugd1997@gmail.com
+        password: tcur clmo zjms euvy
+        properties:
+          mail:
+              smtp:
+                  auth: true
+                  timeout: 5000
+                  starttls:
+                      enable: true
+
+    jpa:
+        database: mysql
+        hibernate:
+            # 배포할 때는 none, 개발할 때는 update
+            ddl-auto: update
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: true
+
+    # 파일 업로드 설정
+    servlet:
+      multipart:
+          location: uploads/
+          max-file-size: 10MB
+
+# 파일 경로 설정
+file:
+    upload:
+        path: uploads/
+
+
+
+
+
+
+
+
+
