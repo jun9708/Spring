@@ -7,6 +7,7 @@ plugins {
 group = 'kr.co.sboard'
 version = '0.0.1-SNAPSHOT'
 
+
 java {
     sourceCompatibility = '17'
 }
@@ -52,7 +53,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// Java에서 빌드 정보 객체(BuildProperties)를 참조 위해 gradle buildInfo() 실행
+// springBoot 에서 빌드 정보 객체(BuildProperties)를 참조 위해 gradle buildInfo() 실행
 springBoot {
     buildInfo()
 }
