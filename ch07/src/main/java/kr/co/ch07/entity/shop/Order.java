@@ -24,14 +24,13 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "orderer")
     private Customer customer;
-    private int orderStatus;
+
     private int orderPrice;
+    private int orderStatus;
 
     @CreationTimestamp
     private LocalDateTime orderDate;
 
     @OneToMany(mappedBy = "order")
-    List<OrderItem >orderItems;
-
-
+    List<OrderItem> orderItems;
 }

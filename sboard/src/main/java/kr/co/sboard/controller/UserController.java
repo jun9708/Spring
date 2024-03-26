@@ -8,13 +8,13 @@ import kr.co.sboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,6 +26,8 @@ public class UserController {
     @GetMapping("/user/login")
     public String login(@ModelAttribute("success") String success){
         // 매개변수 success에 @ModelAttribute 선언으로 View 참조할 수 있음
+
+
         return "/user/login";
     }
 
@@ -98,5 +100,25 @@ public class UserController {
 
             return ResponseEntity.ok().body(resultMap);
         }
+    }
+
+    @GetMapping("/user/findId")
+    public String findId(){
+        return "/user/findId";
+    }
+
+    @GetMapping("/user/findIdResult")
+    public String findIdResult(HttpSession session, Model model){
+        return "/user/findIdResult";
+    }
+
+    @GetMapping("/user/findPassword")
+    public String findPassword(){
+        return "/user/findPassword";
+    }
+
+    @GetMapping("/user/findPasswordChange")
+    public String findPasswordChange(){
+        return "/user/findPasswordChange";
     }
 }

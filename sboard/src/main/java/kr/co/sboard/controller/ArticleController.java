@@ -4,20 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
-import kr.co.sboard.service.ArticleService;
-import kr.co.sboard.service.FileService;
+import kr.co.sboard.repository.ConfigRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.el.util.ReflectionUtil;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,15 +17,13 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
-    private final FileService fileService;
-
+    private final ConfigRepository configRepository;
     /*
         @ModelAttribute("cate")
          - modelAttribute("cate", cate)와 동일
     */
     @GetMapping("/article/list")
-    public String list(Model model, PageRequestDTO pageRequestDTO){
-
+    public String list(Model model, String cate, PageRequestDTO pageRequestDTO){
         PageResponseDTO pageResponseDTO = articleService.findByParentAndCate(pageRequestDTO);
         log.info("pageResponseDTO : " + pageResponseDTO);
 
@@ -43,9 +33,22 @@ public class ArticleController {
     }
 
     @GetMapping("/article/write")
-    public String write(@ModelAttribute("cate") String cate){
+    public String write(Model model, String cate){
+
         return "/article/write";
     }
+
+
+
+    @GetMapping("/article/view")
+    public String view(Model model, String cate, int no){
+        ArticleDTO articleDTO = articleService.findById(no);
+
+        model.addAttribute(articleDTO);
+
+        return "/article/view";
+    }
+
 
     @PostMapping("/article/write")
     public String write(HttpServletRequest req, ArticleDTO articleDTO){
@@ -63,16 +66,9 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
-    @GetMapping("/article/view")
-    public String view(int no, Model model){
 
-        ArticleDTO articleDTO = articleService.findById(no);
-        model.addAttribute(articleDTO);
 
-        return "article/view";
-    }
+    // fileDownload 메서드 FileController로 이동
+
 
 }
-
-
-

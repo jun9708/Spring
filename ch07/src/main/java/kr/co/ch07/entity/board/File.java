@@ -18,10 +18,8 @@ public class File {
     private String oName;
     private String sName;
 
-    @OneToOne
-    @JoinColumn(name="ano")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ano")
     private Article article;
-
-
 
 }

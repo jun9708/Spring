@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,12 +31,12 @@ class User1RepositoryTest {
     public void insertUser1(){
         // given - entity 준비
         User1 user1 = User1.builder()
-                .uid("j101")
-                .name("김유신")
-                .birth("1990-03-12")
-                .hp("010-1234-1002")
-                .age(21)
-                .build();
+                        .uid("j101")
+                        .name("김유신")
+                        .birth("1990-03-12")
+                        .hp("010-1234-1002")
+                        .age(21)
+                        .build();
 
         // when - entity 저장
         repository.save(user1);
@@ -75,7 +76,7 @@ class User1RepositoryTest {
     */
     @Test
     public void findUser1ByUid(){
-        User1 user1 = repository.findUser1ByUid("a111");
+        User1 user1 = repository.findUser1ByUid("a101");
         log.warn(user1.toString());
     }
     @Test
@@ -90,7 +91,7 @@ class User1RepositoryTest {
     }
     @Test
     public void findUser1ByUidAndName(){
-        User1 user1 = repository.findUser1ByUidAndName("a111", "김준형");
+        User1 user1 = repository.findUser1ByUidAndName("a101", "김유신");
         log.warn(user1.toString());
     }
     @Test
@@ -192,7 +193,13 @@ class User1RepositoryTest {
     }
     @Test
     public void selectUser1ByUid(){
-        List<User1> user1s = repository.selectUser1ByUid("a101");
-        log.warn(user1s.toString());
+        List<Object[]> user1s = repository.selectUser1ByUid("a101");
+
+        for(Object[] user1 : user1s){
+            log.warn(user1[0].toString());
+            log.warn(user1[1].toString());
+            log.warn(user1[2].toString());
+        }
+
     }
 }

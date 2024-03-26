@@ -28,6 +28,10 @@
                 if(e.target.dataset.mode == 'remove'){
                     e.preventDefault();
 
+                    const result = confirmModal('정말 삭제 하시겠습니까?');
+                    console.log("result2 : " + result);
+                    /*
+
                     // 해당 삭제에서 가장 가까운 부모 comment 문서객체 생성
                     const comment = e.target.closest('.comment');
 
@@ -36,20 +40,70 @@
 
                     console.log('no : ' + no);
 
+
                     // DELETE용 fetch 함수 정의
                     const data = fetchDelete(`/sboard/comment/${no}`);
 
                     if(data){
                         alertModal("삭제 되었습니다.");
                         comment.remove();
+                    }
+                    */
+                }else if(e.target.dataset.mode == 'modify'){
 
+                    // 수정모드
+                    const comment = e.target.closest('.comment');
+                    const textarea = comment.getElementsByTagName('textarea')[0];
+                    const btnModify = comment.getElementsByClassName('btnModify')[0];
+                    const btnRemove = comment.getElementsByClassName('btnRemove')[0];
+
+                    console.log(textarea);
+
+                    textarea.readOnly = false;
+                    textarea.style.outline = "1px solid #111"
+                    textarea.focus();
+                    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+
+                    btnModify.innerText = "수정"
+                    btnModify.dataset.mode = 'update';
+
+                    btnRemove.innerText = "취소"
+                    btnRemove.dataset.mode = 'cancel';
+
+                }else if(e.target.dataset.mode == 'cancel') {
+                    alertModal("취소!");
+                    const comment = e.target.closest('.comment');
+                    const textarea = comment.getElementsByTagName('textarea')[0];
+                    const btnModify = comment.getElementsByClassName('btnModify')[0];
+                    const btnRemove = comment.getElementsByClassName('btnRemove')[0];
+
+                    textarea.readOnly = true;
+                    textarea.style.outline = 'none';
+                    btnModify.dataset.mode = 'modify';
+                    btnRemove.innerText = "삭제"
+                    btnRemove.dataset.mode = 'remove';
+
+                }else if(e.target.dataset.mode == 'update') {
+
+                    const comment = e.target.closest('.comment');
+                    const textarea = comment.getElementsByTagName('textarea')[0];
+                    const no = comment.dataset.no;
+
+                    const jsonData = {
+                        "no": no,
+                        "content": textarea.value
                     }
 
-                }else if(e.target.dataset.mode == 'modify'){
-                    const result = confirmModal("정말 수정 하시겠습니까?");
-                    console.log("result : " + result);
-                }
+                    console.log(jsonData);
 
+                    // PUT용 fetch 함수 정의(util.js)
+                    const data = fetchPut(`/sboard/comment`, jsonData);
+
+                    console.log(data);
+
+                    alertModal("수정이 완료 되었습니다.");
+
+                }
             });
 
 
@@ -74,7 +128,7 @@
                 for(const comment of comments){
                     commentPlaceholder.remove();
 
-                    const commentArticle = `<div class="mb-3 comment">
+                    const commentArticle = `<div class="mb-3 comment" data-no="${comment.no}">
                                                     <ol class="breadcrumb mb-1">
                                                         <li class="breadcrumb-item">${comment.writer}</li>
                                                         <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
@@ -115,7 +169,7 @@
                 console.log(data);
 
                 // 댓글목록 동적처리
-                const commentArticle = `<div class="mb-3 comment">
+                const commentArticle = `<div class="mb-3 comment" data-no="${comment.no}">
                                                 <ol class="breadcrumb mb-1">
                                                     <li class="breadcrumb-item">${data.writer}</li>
                                                     <li class="breadcrumb-item">${data.rdate.substring(0, 10)}</li>
@@ -123,8 +177,8 @@
 
                                                 <textarea class="form-control" rows="3" readonly>${data.content}</textarea>
                                                 <div class="text-end mt-1">
-                                                    <button type="button" class="btn btn-warning btn-sm">수정</button>
-                                                    <button type="button" class="btn btn-danger btn-sm">삭제</button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-no="${data.no}">수정</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-no="${data.no}">삭제</button>
                                                 </div>
                                             </div>`;
 

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public interface User1Repository extends JpaRepository<User1, String> {
@@ -49,5 +50,5 @@ public interface User1Repository extends JpaRepository<User1, String> {
     public List<User1> selectUser1ByNameParam(@Param("name") String name);
 
     @Query("select u1.uid, u1.name, u1.age from User1 as u1 where u1.uid = :uid")
-    public List<User1> selectUser1ByUid(@Param("uid") String uid);
+    public List<Object[]> selectUser1ByUid(@Param("uid") String uid);
 }

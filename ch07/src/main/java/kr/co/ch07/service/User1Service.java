@@ -34,13 +34,12 @@ public class User1Service {
 
         /*
             Optional
-             - null값 검증처리를 손쉽게 활용하는 구조체
-             - Spring JPA 조회 결과 타입
-         */
-
+             - null 체크 검증처리를 손쉽고 안전하게 처리하기 위한 클래스
+             - Spring JPA find 결과 타입
+        */
         // 조회
         Optional<User1> result = repository.findById(uid);
-        User1 user1 = result.get();
+        User1 user1 = result.get(); // 값이 존재하면 반환 그렇지 않으면 NoSuchElementException 발생
 
         // Entity를 DTO로 변환 후 리턴
         return user1.toDTO();
@@ -50,24 +49,25 @@ public class User1Service {
         // 전체 조회
         List<User1> user1s = repository.findAll();
 
-        // Entity 리스트를 DTO 리스트로 변환
+        // for(외부반복자)을 이용한 Entity 리스트를 DTO 리스트로 변환
         /*
-        // 일반적인 방식
         List<User1DTO> user1DTOs = new ArrayList<>();
 
         for(User1 user1 : user1s){
             user1DTOs.add(user1.toDTO());
         }
         */
+
+        // 스트림(내부반복자)를 이용한 Entity 리스트를 DTO 리스트로 변환
         List<User1DTO> user1DTOs = user1s.stream()
-                .map(entity -> User1DTO.builder()
-                        .uid(entity.getUid())
-                        .name(entity.getName())
-                        .birth(entity.getBirth())
-                        .hp(entity.getHp())
-                        .age(entity.getAge())
-                        .build())
-                .collect(Collectors.toList());
+                                         .map(entity -> User1DTO.builder()
+                                                .uid(entity.getUid())
+                                                .name(entity.getName())
+                                                .birth(entity.getBirth())
+                                                .hp(entity.getHp())
+                                                .age(entity.getAge())
+                                                .build())
+                                         .collect(Collectors.toList());
 
         return user1DTOs;
     }

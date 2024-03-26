@@ -25,7 +25,6 @@ public class CommentController {
 
     @PostMapping("/comment")
     public ResponseEntity<Article> postComment(@RequestBody ArticleDTO articleDTO, HttpServletRequest req){
-
         String regip = req.getRemoteAddr();
         articleDTO.setRegip(regip);
         log.info("articleDTO : " + articleDTO);
@@ -35,9 +34,11 @@ public class CommentController {
 
     @DeleteMapping("/comment/{no}")
     public ResponseEntity<?> deleteComment(@PathVariable("no") int no){
-        return  commentService.deleteComment(no);
+        return commentService.deleteComment(no);
     }
 
-
-
+    @PutMapping("/comment")
+    public ResponseEntity<?> putComment(@RequestBody ArticleDTO articleDTO, HttpServletRequest req){
+        return commentService.updateComment(articleDTO);
+    }
 }

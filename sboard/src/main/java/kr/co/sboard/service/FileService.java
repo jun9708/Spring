@@ -117,11 +117,12 @@ public class FileService {
         }
     }
 
-    public ResponseEntity<?> fileDownloadCount(int fno){
-        //파일 조회
+    public ResponseEntity<?> fileDownloadCount(int fno)  {
+
+        // 파일 조회
         kr.co.sboard.entity.File file = fileRepository.findById(fno).get();
 
-        //다운로드 카운트 Json 생성
+        // 다운로드 카운트 Json 생성
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("count", file.getDownload());
 

@@ -10,18 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="365cec33-64b7-4959-9567-9de9420f3a8d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/MyWebAppInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ch04/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ch04/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,6 +211,14 @@
       <workItem from="1709799503314" duration="2952000" />
       <workItem from="1709802464517" duration="775000" />
       <workItem from="1709803246835" duration="1190000" />
+      <workItem from="1710128848029" duration="2597000" />
+      <workItem from="1710133163220" duration="303000" />
+      <workItem from="1710133701383" duration="606000" />
+      <workItem from="1710135719950" duration="843000" />
+      <workItem from="1710137594045" duration="295000" />
+      <workItem from="1710725673688" duration="3000" />
+      <workItem from="1710725685285" duration="620000" />
+      <workItem from="1710727706848" duration="13000" />
     </task>
     <servers />
   </component>
