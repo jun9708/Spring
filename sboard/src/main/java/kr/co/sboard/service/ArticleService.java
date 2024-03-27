@@ -1,12 +1,15 @@
 package kr.co.sboard.service;
 
+import com.querydsl.core.Tuple;
 import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.FileDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
 import kr.co.sboard.entity.Article;
+import kr.co.sboard.entity.Config;
 import kr.co.sboard.entity.File;
 import kr.co.sboard.repository.ArticleRepository;
+import kr.co.sboard.repository.ConfigRepository;
 import kr.co.sboard.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,18 +30,50 @@ import java.util.UUID;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final ConfigRepository configRepository;
     private final FileService fileService;
     private final FileRepository fileRepository;
-
-    // RootConfig Bean 생성/등록
     private final ModelMapper modelMapper;
 
-    public PageResponseDTO findByParentAndCate(PageRequestDTO pageRequestDTO){
+    public PageResponseDTO selectArticles(PageRequestDTO pageRequestDTO){
 
+        log.info("selectArticles...1");
         Pageable pageable = pageRequestDTO.getPageable("no");
 
-        Page<Article> pageArticle = articleRepository.findByParentAndCate(0, pageRequestDTO.getCate(), pageable);
+        log.info("selectArticles...2");
+        Page<Tuple> pageArticle = articleRepository.selectArticles(pageRequestDTO, pageable);
 
+        log.info("selectArticles...3 : " + pageArticle);
+        List<ArticleDTO> dtoList = pageArticle.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            Article article = tuple.get(0, Article.class);
+                            String nick = tuple.get(1, String.class);
+                            article.setNick(nick);
+
+                            log.info("article : " + article);
+
+                            return modelMapper.map(article, ArticleDTO.class);
+                        }
+                )
+                .toList();
+
+        log.info("selectArticles...4 : " + dtoList);
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total(total)
+                .build();
+    }
+
+    public PageResponseDTO searchArticles(PageRequestDTO pageRequestDTO){
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Article> pageArticle = articleRepository.searchArticles(pageRequestDTO, pageable);
 
         List<ArticleDTO> dtoList = pageArticle.getContent().stream()
                 .map(entity -> modelMapper.map(entity, ArticleDTO.class))
@@ -107,6 +139,6 @@ public class ArticleService {
         }
     }
 
-    // fileUpload 메서드 -> FileService 클래스로 이동
+
 
 }

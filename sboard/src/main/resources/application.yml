@@ -36,20 +36,15 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-<<<<<<< HEAD
         username: wnsgud1997@gmail.com
         password: lrem jueb jjdv zlqi
-=======
-        username: wnsugd1997@gmail.com
-        password: 
->>>>>>> f11494aef07c69cb8bcdc954e042db9df70f135a
         properties:
-          mail:
-              smtp:
-                  auth: true
-                  timeout: 5000
-                  starttls:
-                      enable: true
+            mail:
+                smtp:
+                    auth: true
+                    timeout: 5000
+                    starttls:
+                        enable: true
 
     jpa:
         database: mysql

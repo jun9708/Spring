@@ -1,15 +1,24 @@
 package kr.co.sboard.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.sboard.config.AppInfo;
 import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
+import kr.co.sboard.entity.Config;
 import kr.co.sboard.repository.ConfigRepository;
+import kr.co.sboard.service.ArticleService;
+import kr.co.sboard.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,7 +33,17 @@ public class ArticleController {
     */
     @GetMapping("/article/list")
     public String list(Model model, String cate, PageRequestDTO pageRequestDTO){
-        PageResponseDTO pageResponseDTO = articleService.findByParentAndCate(pageRequestDTO);
+
+        PageResponseDTO pageResponseDTO = null;
+
+        if(pageRequestDTO.getKeyword() == null) {
+            // 일반 글 목록 조회
+            pageResponseDTO = articleService.selectArticles(pageRequestDTO);
+        }else {
+            // 검색 글 목록 조회
+            pageResponseDTO = articleService.searchArticles(pageRequestDTO);
+        }
+
         log.info("pageResponseDTO : " + pageResponseDTO);
 
         model.addAttribute(pageResponseDTO);
@@ -33,7 +52,13 @@ public class ArticleController {
     }
 
     @GetMapping("/article/write")
-    public String write(Model model, String cate){
+    public String write(Model model, String cate, PageRequestDTO pageRequestDTO){
+
+        PageResponseDTO pageResponseDTO = PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .build();
+
+        model.addAttribute(pageResponseDTO);
 
         return "/article/write";
     }
