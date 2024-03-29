@@ -34,8 +34,8 @@ public class CommentService {
         List<Article> articleList = articleRepository.findByParent(no);
 
         List<ArticleDTO> articleDTOS = articleList.stream()
-                .map(entity -> modelMapper.map(entity, ArticleDTO.class))
-                .toList();
+                                .map(entity -> modelMapper.map(entity, ArticleDTO.class))
+                                .toList();
 
         return ResponseEntity.ok().body(articleDTOS);
     }

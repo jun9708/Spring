@@ -14,7 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 인터셉터 등록 설정
         registry.addInterceptor(new AppInfoInterceptor(appInfo));
-
     }
 }

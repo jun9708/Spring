@@ -38,14 +38,15 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
 
         // 부가적인 Query 실행 정보를 처리하기 위해 fetchResults()로 실행
         QueryResults<Tuple> results = jpaQueryFactory
-                .select(qArticle, qUser.nick)
-                .from(qArticle)
-                .where(qArticle.cate.eq(cate).and(qArticle.parent.eq(0)))
-                .join(qUser)
-                .on(qArticle.writer.eq(qUser.uid))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchResults();
+                                        .select(qArticle, qUser.nick)
+                                        .from(qArticle)
+                                        .where(qArticle.cate.eq(cate).and(qArticle.parent.eq(0)))
+                                        .join(qUser)
+                                        .on(qArticle.writer.eq(qUser.uid))
+                                        .offset(pageable.getOffset())
+                                        .limit(pageable.getPageSize())
+                                        .orderBy(qArticle.no.desc())
+                                        .fetchResults();
 
         log.info("selectArticles...1-2 : " + results);
 
@@ -62,7 +63,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
     }
 
     @Override
-    public Page<Article> searchArticles(PageRequestDTO pageRequestDTO, Pageable pageable) {
+    public Page<Tuple> searchArticles(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
         String cate = pageRequestDTO.getCate();
         String type = pageRequestDTO.getType();
@@ -86,23 +87,25 @@ public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
             log.info("expression : " + expression);
 
         }else if(type.equals("writer")) {
-            expression = qArticle.cate.eq(cate).and(qArticle.nick.contains(keyword));
+            expression = qArticle.cate.eq(cate).and(qArticle.parent.eq(0)).and(qUser.nick.contains(keyword));
             log.info("expression : " + expression);
         }
 
         // 부가적인 Query 실행 정보를 처리하기 위해 fetchResults()로 실행
-        QueryResults<Article> results = jpaQueryFactory
-                .selectFrom(qArticle)
-                .where(expression)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchResults();
+        QueryResults<Tuple> results = jpaQueryFactory
+                                            .select(qArticle, qUser.nick)
+                                            .from(qArticle)
+                                            .join(qUser)
+                                            .on(qArticle.writer.eq(qUser.uid))
+                                            .where(expression)
+                                            .offset(pageable.getOffset())
+                                            .limit(pageable.getPageSize())
+                                            .orderBy(qArticle.no.desc())
+                                            .fetchResults();
 
-
-        List<Article> content = results.getResults();
+        List<Tuple> content = results.getResults();
         long total = results.getTotal();
-
-
+        
         // 페이징 처리를 위해 page 객체 리턴
         return new PageImpl<>(content, pageable, total);
     }

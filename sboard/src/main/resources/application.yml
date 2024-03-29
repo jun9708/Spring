@@ -67,16 +67,51 @@ spring:
     thymeleaf:
         prefix: classpath:/templates
 
+    security:
+        oauth2:
+            client:
+                provider:
+                    kakao:
+                        authorization-uri: https://kauth.kakao.com/oauth/authorize
+                        user-name-attribute: id
+                        token-uri: https://kauth.kakao.com/oauth/token
+                        user-info-uri: https://kapi.kakao.com/v2/user/me
+
+                registration:
+                    kakao:
+                        client-name: kakao
+                        authorization-grant-type: authorization_code
+
+                        #카카오 > 내 애플리케이션 > 카카오 로그인 > 등록한 Redirect URI 입력
+                        redirect-uri: http://localhost:8080/oauthTest/login/oauth2/code/kakao
+
+                        #카카오 > 내 애플리케이션 > 요약정보 > REST API 키
+                        client-id: b727b08c6647c331a073a0108388b373
+
+                        #카카오 > 내 애플리케이션 > 카카오 로구안 > 보안 > Client Secret 생성후 입력
+                        client-secret: VfnnyUkqERNgE4R1pGdrgMy5CiCeRvDu
+
+
+                        client-authentication-method: client_secret_post
+
+                        scope: profile_nickname, profile_image
+
+
+                    google:
+                        client-id: 653871108778-3armd5o0gopmh37c0vdis4t820k6hqa7.apps.googleusercontent.com
+                        client-secret: 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
+                        redirect-uri: http://localhost:8080/oauthTest/login/oauth2/code/google
+                        scope:
+                            - email
+                            - profile
+
+
+
+
 # 파일 경로 설정
 file:
     upload:
         path: uploads/
-
-
-
-
-
-
 
 
 

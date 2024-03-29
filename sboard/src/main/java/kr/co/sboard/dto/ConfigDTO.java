@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class ConfigDTO {
     /*
         날짜 : 2024/03/19
-        이름 : 김준형
+        이름 : 김철학
         내용 : 게시판 테이블 설정 정보
 
         cate: 게시판 카테고리

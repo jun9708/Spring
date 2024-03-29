@@ -23,6 +23,7 @@
         select * from user where name=#{name} and email=#{email}
     </select>
 
+
     <insert id="insertUser">
         insert into user set
                             uid=#{uid},

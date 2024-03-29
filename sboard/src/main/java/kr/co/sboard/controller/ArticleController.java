@@ -36,6 +36,7 @@ public class ArticleController {
 
         PageResponseDTO pageResponseDTO = null;
 
+
         if(pageRequestDTO.getKeyword() == null) {
             // 일반 글 목록 조회
             pageResponseDTO = articleService.selectArticles(pageRequestDTO);
@@ -88,7 +89,7 @@ public class ArticleController {
 
         articleService.insertArticle(articleDTO);
 
-        return "redirect:/article/list";
+        return "redirect:/article/list" + "?cate=" + articleDTO.getCate();
     }
 
 

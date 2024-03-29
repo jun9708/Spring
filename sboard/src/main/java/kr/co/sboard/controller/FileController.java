@@ -1,5 +1,6 @@
 package kr.co.sboard.controller;
 
+
 import kr.co.sboard.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,15 +17,14 @@ public class FileController {
     private final FileService fileService;
 
     @GetMapping("/file/download/{fno}")
-    public ResponseEntity<?> fileDownload(@PathVariable("fno") int fno){
-        log.info("fileDownload : " +fno);
-        return  fileService.fileDownload(fno);
-    }
-
-    @GetMapping("/file/downloadCount/{fno}")
-    public ResponseEntity<?> fileDownloadCount(@PathVariable("fno") int fno){
-        log.info("fileDownloadCount : " +fno);
+    public ResponseEntity<?> fileDownload(@PathVariable("fno") int fno) {
+        log.info("fileDownload : " + fno);
         return fileService.fileDownload(fno);
     }
 
+    @GetMapping("/file/downloadCount/{fno}")
+    public ResponseEntity<?> fileDownloadCount(@PathVariable("fno") int fno) {
+        log.info("fileDownloadCount : " + fno);
+        return fileService.fileDownloadCount(fno);
+    }
 }
