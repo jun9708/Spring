@@ -85,6 +85,17 @@
   box-sizing: border-box;
 }
 
+
+#exampleFormControlTextarea1 {
+  border-color: #ced4da; /* 테두리 색상을 변경하거나, 제거할 수 있습니다 */
+  box-shadow: none; /* 선택 시에 생기는 그림자도 제거합니다 */
+}
+
+#exampleFormControlInput1 {
+  border-color : #ced4da;
+  box-shadow: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;
